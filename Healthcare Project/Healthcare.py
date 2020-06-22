@@ -1,3 +1,4 @@
+#IMPROVEMENT 66% to 80.46% accuracy
 #import libraries
 import numpy as np
 import pandas as pd
@@ -5,23 +6,26 @@ import matplotlib.pyplot as plt
 
 #importing the dataset
 dataset = pd.read_csv("DATASET/Heart.csv")
-#Deleting the 13 th column
-del dataset['Thal']
-X = dataset.iloc[:,:-1].values
-Y = dataset.iloc[:,13].values
-
+dataset = dataset.dropna()
+X = dataset.iloc[:,:14].values
+Y = dataset.iloc[:,14].values
 
 #Encoding Categorical Data
-from sklearn.preprocessing import LabelEncoder
+from sklearn.preprocessing import LabelEncoder,OneHotEncoder
 lb = LabelEncoder()
 X[:,3] = lb.fit_transform(X[:,3])
-#X[:,13] = lb.fit(X[:,13])
-Y = lb.fit_transform(Y)
-
+X[:,13] = lb.fit_transform(X[:,13])
 #imputer(It takes 2d array)
 from sklearn.impute import SimpleImputer
 imp = SimpleImputer(missing_values = np.nan, strategy = 'mean')
-X[:,11:13] = imp.fit_transform(X[:,11:13])
+X = imp.fit_transform(X)
+Y = lb.fit_transform(Y)
+#OneHotEncoder
+'''
+ohe = OneHotEncoder(categorical_features = [3,13])
+X = ohe.fit_transform(X).toarray()
+'''
+
 
 #Feature Scaling
 from sklearn.preprocessing import StandardScaler
@@ -33,24 +37,25 @@ from sklearn.model_selection import train_test_split
 X_train,X_test,Y_train,Y_test = train_test_split(X,Y,test_size = 0.33,random_state = 0)
 
 #Applying Dimensional Reduction
+'''
 from sklearn.decomposition import PCA
 pca = PCA(n_components = 2)
 X_train = pca.fit_transform(X_train)
 X_test = pca.transform(X_test)
-
-#Classification model
-#1.Logistic Regression(BAD OPTION)
 '''
+#Classification model
+#1.Logistic Regression(Best amoung all)
+
 from sklearn.linear_model import LogisticRegression
 classifier = LogisticRegression()
 classifier.fit(X_train,Y_train)
-'''
-#2. KNN Classifier
 
+#2. KNN Classifier
+'''
 from sklearn.neighbors import KNeighborsClassifier
 classifier = KNeighborsClassifier(n_neighbors = 5,metric = 'minkowski',p = 2)
 classifier.fit(X_train,Y_train)
-
+'''
 #3. Decision Tree Classification
 '''
 from sklearn.tree import DecisionTreeClassifier
@@ -78,10 +83,11 @@ print(classification_report(Y_test,Y_pred))
 print(classifier.score(X_train,Y_train))'''
 
 #Only accuracy measure
-from sklearn.metrics import average_precision_score
-average_precision = average_precision_score(Y_test,Y_pred)
-print("Average_Precision_Score: {0:0.2f}".format(average_precision))
+from sklearn.metrics import f1_score
+print("F1_Score   : {:.2f}%".format(f1_score(Y_test,Y_pred)*100))
 
+
+'''
 #Visualising the training set result
 from matplotlib.colors import ListedColormap
 X_set,Y_set = X_train,Y_train
@@ -117,3 +123,4 @@ plt.xlabel('pc1')
 plt.ylabel('pc2')
 plt.legend()
 plt.show()
+'''
