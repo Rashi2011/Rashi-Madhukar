@@ -1,4 +1,4 @@
-#IMPROVEMENT 66% to 80.46% accuracy
+#IMPROVEMENT 66% to 82.83% accuracy
 #import libraries
 import numpy as np
 import pandas as pd
@@ -25,7 +25,6 @@ Y = lb.fit_transform(Y)
 ohe = OneHotEncoder(categorical_features = [3,13])
 X = ohe.fit_transform(X).toarray()
 '''
-
 
 #Feature Scaling
 from sklearn.preprocessing import StandardScaler
@@ -83,8 +82,9 @@ print(classification_report(Y_test,Y_pred))
 print(classifier.score(X_train,Y_train))'''
 
 #Only accuracy measure
-from sklearn.metrics import f1_score
-print("F1_Score   : {:.2f}%".format(f1_score(Y_test,Y_pred)*100))
+from sklearn.metrics import f1_score,accuracy_score
+#print("F1_Score   : {:.2f}%".format(f1_score(Y_test,Y_pred)*100))
+print("accuracy_score = {:.2f}%".format(accuracy_score(Y_test,Y_pred)*100))
 
 
 '''
