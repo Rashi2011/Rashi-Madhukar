@@ -1,0 +1,23 @@
+***On April 15, 1912, during her maiden voyage, the widely considered “unsinkable” RMS Titanic sank after colliding with an iceberg. Unfortunately, there weren’t enough lifeboats 
+for everyone onboard, resulting in the death of 1502 out of 2224 passengers and crew.While there was some element of luck involved in surviving, it seems some groups of people were
+more likely to survive than others.***
+
+In this Challenge, we are likely to predict what sort of people survived the incident using Passengers Data(eg. name,age,gender,socio-economic class etc..)
+
+Dataset divided into Training data(891) and Test Data(418) where Training data is the ground truth showing actual people who survived and including their required details and test data
+contains similiar information but is actually not on ground truth .
+Details about Our Training data:
+Independent Variable:
+1. pclass : Ticket Class 1st/2nd/3rd class
+2. sec : F/M
+3. Age
+4. sibsep : #of sibling/spoused of the person in the Titanic
+5. parch : #of parent/children of the person in the Titanic
+6. Ticket : Ticket number
+7. fare : ticket fare
+8. embarked : Q(queenstown)/C(cherbourg)/S(southampton) ship ports from where people joined Titanic
+
+Dependent variable:
+1. Survival : yes or no
+
+
